@@ -375,7 +375,7 @@ export default function App() {
 
     // Ticket numbers are exactly 6 digits.
     if (!/^\d{6}$/.test(normalizedTicket)) {
-      showHint("Your ticket number must be exactly 6 digits.", "error");
+      showHint("Your ticket number must be exactly 5 digits.", "error");
       return;
     }
 
@@ -567,7 +567,7 @@ export default function App() {
                 id="ticketNumber"
                 type="text"
                 inputMode="numeric"
-                placeholder="e.g. 001234"
+                placeholder="e.g. MXRTG"
                 value={ticketNumber}
                 onChange={handleTicketChange}
                 disabled={submitting}
@@ -577,7 +577,7 @@ export default function App() {
                 aria-describedby="ticketNote voteHint"
               />
               <p className="ticket-field__note" id="ticketNote">
-                Your ticket number must be <strong>exactly 6 digits</strong> (e.g. 001234).
+                Your ticket number must be <strong>exactly 5 digits</strong> (e.g. MXRTG).
               </p>
             </div>
 
