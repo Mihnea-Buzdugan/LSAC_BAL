@@ -373,6 +373,12 @@ export default function App() {
       return;
     }
 
+    // Ticket numbers are exactly 6 digits.
+    if (!/^\d{6}$/.test(normalizedTicket)) {
+      showHint("Your ticket number must be exactly 6 digits.", "error");
+      return;
+    }
+
     // Validate selected couple.
     if (selected === null) {
       showHint("Pick a couple before you vote.", "error");
@@ -566,42 +572,57 @@ export default function App() {
                 onChange={handleTicketChange}
                 disabled={submitting}
                 autoComplete="off"
-                maxLength={50}
-                aria-describedby="voteHint"
+                maxLength={6}
+                pattern="\d{6}"
+                aria-describedby="ticketNote voteHint"
               />
+              <p className="ticket-field__note" id="ticketNote">
+                Your ticket number must be <strong>exactly 6 digits</strong> (e.g. 001234).
+              </p>
             </div>
 
             {/* COUPLE SELECTION */}
-            <fieldset className="walk" disabled={hasVoted || submitting}>
+            <p className="walk-note" id="walkNote">
+              <span>&#9733;</span> Click on the couple you want to vote for <span>&#9733;</span>
+            </p>
+
+            <fieldset
+              className="walk-set"
+              disabled={hasVoted || submitting}
+              aria-describedby="walkNote"
+            >
               <legend className="sr-only">Choose your favourite couple</legend>
 
-              {COUPLES.map((c, i) => (
-                <label
-                  key={c.id}
-                  className={`plaque${hasVoted && selected === i ? " is-mine" : ""}`}
-                  data-couple={i + 1}
-                >
-                  <input
-                    type="radio"
-                    name="couple"
-                    value={i}
-                    checked={selected === i}
-                    onChange={() => pick(i)}
-                  />
-                  <span className="plaque__thumb">
-                    <img src={c.image} width="1179" height={c.h} loading="lazy" alt="" />
-                  </span>
-                  <span className="plaque__star" aria-hidden="true">
-                    <svg viewBox="0 0 100 96">
-                      <use href="#star" />
-                    </svg>
-                    <b>{i + 1}</b>
-                  </span>
-                  <span className="plaque__name">{c.title}</span>
-                  <span className="plaque__cat">Couple Nº {i + 1}</span>
-                  <span className="plaque__badge"></span>
-                </label>
-              ))}
+              <div className="walk">
+
+                {COUPLES.map((c, i) => (
+                  <label
+                    key={c.id}
+                    className={`plaque${hasVoted && selected === i ? " is-mine" : ""}`}
+                    data-couple={i + 1}
+                  >
+                    <input
+                      type="radio"
+                      name="couple"
+                      value={i}
+                      checked={selected === i}
+                      onChange={() => pick(i)}
+                    />
+                    <span className="plaque__thumb">
+                      <img src={c.image} width="1179" height={c.h} loading="lazy" alt="" />
+                    </span>
+                    <span className="plaque__star" aria-hidden="true">
+                      <svg viewBox="0 0 100 96">
+                        <use href="#star" />
+                      </svg>
+                      <b>{i + 1}</b>
+                    </span>
+                    <span className="plaque__name">{c.title}</span>
+                    <span className="plaque__cat">Couple Nº {i + 1}</span>
+                    <span className="plaque__badge"></span>
+                  </label>
+                ))}
+              </div>
             </fieldset>
 
             <div className="ballot__foot">

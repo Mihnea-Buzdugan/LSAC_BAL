@@ -373,9 +373,14 @@ section[id] { scroll-margin-top: 4.5rem; }
 .poll__head { position: relative; text-align: center; margin-bottom: clamp(3rem, 6vw, 4.5rem); }
 
 .ballot { position: relative; max-width: 60rem; margin: 0 auto; }
-/* three stars on the first row, two centred beneath: a 6-track grid where each plaque spans 2 */
+/* The fieldset only groups the radios; the grid lives on an inner div.
+   (A <fieldset> makes a poor grid container, and its <legend> counted as a
+   child, which pushed the 4th/5th plaques into the wrong cells.) */
+.walk-set { margin: 0; padding: 0; border: 0; min-width: 0; }
+
+/* Inverted pyramid: three stars on the first row, two centred beneath.
+   A 6-track grid where each plaque spans 2; the 4th starts at track 2. */
 .walk {
-  margin: 0; padding: 0; border: 0; min-width: 0;
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   column-gap: clamp(.6rem, 2vw, 1.6rem);
@@ -383,6 +388,25 @@ section[id] { scroll-margin-top: 4.5rem; }
 }
 .walk > .plaque { grid-column: span 2; }
 .walk > .plaque:nth-child(4) { grid-column: 2 / span 2; }
+.walk > .plaque:nth-child(5) { grid-column: 4 / span 2; }
+
+/* Instruction notes */
+.ticket-field__note {
+  margin: 0;
+  font-size: .82rem;
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--beige) 65%, transparent);
+}
+.ticket-field__note strong { color: var(--brass); font-weight: 500; }
+.walk-note {
+  margin: 0 auto clamp(2.2rem, 4.5vw, 3rem);
+  max-width: 30rem;
+  text-align: center;
+  font-size: .74rem; font-weight: 500;
+  letter-spacing: .26em; text-transform: uppercase;
+  color: var(--beige-2);
+}
+.walk-note span { color: var(--brass); }
 
 .plaque {
   position: relative;
@@ -604,13 +628,14 @@ html:not(.js) .hero__cue { display: none; }
 .ticket-field input:disabled { opacity: .6; cursor: not-allowed; }
 
 /* After voting (or while sending) the stars are locked */
-.walk:disabled .plaque { cursor: default; }
-.walk:disabled .plaque:not(:has(input:checked)) { opacity: .55; }
-.walk:disabled .plaque:not(:has(input:checked)):hover {
+.walk-set:disabled .plaque { cursor: default; }
+.walk-set:disabled .plaque:not(:has(input:checked)) { opacity: .55; }
+.walk-set:disabled .plaque:not(:has(input:checked)):hover {
   transform: none;
   border-color: rgba(201, 171, 114, .22);
 }
 
 @media (max-width: 680px) {
   .ticket-field { max-width: 100%; }
+  .walk-note { font-size: .64rem; letter-spacing: .18em; }
 }
