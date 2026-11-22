@@ -373,9 +373,9 @@ export default function App() {
       return;
     }
 
-    // Ticket numbers are exactly 6 digits.
-    if (!/^\d{6}$/.test(normalizedTicket)) {
-      showHint("Your ticket number must be exactly 6 digits.", "error");
+    // Ticket numbers are exactly 6 characters: letters and/or digits.
+    if (!/^[A-Za-z0-9]{6}$/.test(normalizedTicket)) {
+      showHint("Your ticket number must be exactly 6 characters (letters and digits only).", "error");
       return;
     }
 
@@ -566,18 +566,22 @@ export default function App() {
               <input
                 id="ticketNumber"
                 type="text"
-                inputMode="numeric"
-                placeholder="e.g. MXRTGH"
+                inputMode="text"
+                autoCapitalize="characters"
+                autoCorrect="off"
+                spellCheck={false}
+                placeholder="e.g. MX4T9H"
                 value={ticketNumber}
                 onChange={handleTicketChange}
                 disabled={submitting}
                 autoComplete="off"
                 maxLength={6}
-                pattern="\d{6}"
+                pattern="[A-Za-z0-9]{6}"
                 aria-describedby="ticketNote voteHint"
               />
               <p className="ticket-field__note" id="ticketNote">
-                Your ticket number must be <strong>exactly 6 digits</strong> (e.g. MXRTGH).
+                Your ticket number must be <strong>exactly 6 characters</strong>, letters and/or digits
+                (e.g. MX4T9H).
               </p>
             </div>
 
