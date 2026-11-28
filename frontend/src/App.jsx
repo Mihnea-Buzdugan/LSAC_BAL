@@ -59,7 +59,7 @@ const pad = (n) => String(n).padStart(2, "0");
    ------------------------------------------------------------------ */
 
 const API_BASE_URL = (
-  import.meta.env.VITE_API_URL ?? "http://localhost:4000"
+  import.meta.env.VITE_API_URL ?? ""
 ).replace(/\/+$/, "");
 
 const API_URL = `${API_BASE_URL}/api/votes`;

@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 import "./Admin.css";
 
 const API_BASE_URL = (
-  import.meta.env.VITE_API_URL || "http://localhost:4000"
+  import.meta.env.VITE_API_URL || ""
 ).replace(/\/+$/, "");
 
 const COUPLES = [
@@ -77,7 +77,7 @@ export default function Admin() {
 
     setSocketStatus("Connecting...");
 
-    const socket = io(API_BASE_URL, {
+    const socket = io(window.location.origin, {
       transports: ["websocket"],
       auth: {
         adminKey: key,
